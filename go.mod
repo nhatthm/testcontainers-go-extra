@@ -6,7 +6,7 @@ require (
 	github.com/docker/distribution v2.8.1+incompatible
 	github.com/docker/docker v20.10.13+incompatible
 	github.com/docker/go-connections v0.4.0
-	github.com/stretchr/testify v1.7.0
+	github.com/stretchr/testify v1.7.1
 	github.com/testcontainers/testcontainers-go v0.12.0
 )
 
