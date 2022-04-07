@@ -4,6 +4,7 @@ import (
 	"context"
 	"io"
 	"testing"
+	"time"
 
 	"github.com/docker/docker/api/types"
 	"github.com/docker/go-connections/nat"
@@ -87,6 +88,11 @@ func (c *Container) SessionID() string {
 // Start satisfies testcontainers.Container interface.
 func (c *Container) Start(ctx context.Context) error {
 	return c.Called(ctx).Error(0)
+}
+
+// Stop satisfies testcontainers.Container interface.
+func (c *Container) Stop(ctx context.Context, duration *time.Duration) error {
+	return c.Called(ctx, duration).Error(0)
 }
 
 // Terminate satisfies testcontainers.Container interface.
@@ -184,6 +190,11 @@ func (c *Container) ContainerIP(ctx context.Context) (string, error) {
 	result := c.Called(ctx)
 
 	return result.String(0), result.Error(1)
+}
+
+// CopyToContainer satisfies testcontainers.Container interface.
+func (c *Container) CopyToContainer(ctx context.Context, fileContent []byte, containerFilePath string, fileMode int64) error {
+	return c.Called(ctx, fileContent, containerFilePath, fileMode).Error(0)
 }
 
 // CopyFileToContainer satisfies testcontainers.Container interface.
