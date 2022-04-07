@@ -5,6 +5,7 @@ import (
 	"errors"
 	"io"
 	"testing"
+	"time"
 
 	"github.com/docker/docker/api/types"
 	"github.com/docker/go-connections/nat"
@@ -292,6 +293,45 @@ func TestContainer_Start(t *testing.T) {
 			t.Parallel()
 
 			err := tc.mock(t).Start(context.Background())
+
+			assert.Equal(t, tc.expectedError, err)
+		})
+	}
+}
+
+func TestContainer_Stop(t *testing.T) {
+	t.Parallel()
+
+	duration := time.Second
+
+	testCases := []struct {
+		scenario      string
+		mock          mock.ContainerMocker
+		expectedError error
+	}{
+		{
+			scenario: "error",
+			mock: mock.MockContainer(func(c *mock.Container) {
+				c.On("Stop", context.Background(), &duration).
+					Return(errors.New("error"))
+			}),
+			expectedError: errors.New("error"),
+		},
+		{
+			scenario: "no error",
+			mock: mock.MockContainer(func(c *mock.Container) {
+				c.On("Stop", context.Background(), &duration).
+					Return(nil)
+			}),
+		},
+	}
+
+	for _, tc := range testCases {
+		tc := tc
+		t.Run(tc.scenario, func(t *testing.T) {
+			t.Parallel()
+
+			err := tc.mock(t).Stop(context.Background(), &duration)
 
 			assert.Equal(t, tc.expectedError, err)
 		})
@@ -703,6 +743,43 @@ func TestContainer_ContainerIP(t *testing.T) {
 			result, err := tc.mock(t).ContainerIP(context.Background())
 
 			assert.Equal(t, tc.expectedResult, result)
+			assert.Equal(t, tc.expectedError, err)
+		})
+	}
+}
+
+func TestContainer_CopyToContainer(t *testing.T) {
+	t.Parallel()
+
+	testCases := []struct {
+		scenario      string
+		mock          mock.ContainerMocker
+		expectedError error
+	}{
+		{
+			scenario: "error",
+			mock: mock.MockContainer(func(c *mock.Container) {
+				c.On("CopyToContainer", context.Background(), []byte(`hello world`), "/tmp/test.csv", int64(0)).
+					Return(errors.New("error"))
+			}),
+			expectedError: errors.New("error"),
+		},
+		{
+			scenario: "no error",
+			mock: mock.MockContainer(func(c *mock.Container) {
+				c.On("CopyToContainer", context.Background(), []byte(`hello world`), "/tmp/test.csv", int64(0)).
+					Return(nil)
+			}),
+		},
+	}
+
+	for _, tc := range testCases {
+		tc := tc
+		t.Run(tc.scenario, func(t *testing.T) {
+			t.Parallel()
+
+			err := tc.mock(t).CopyToContainer(context.Background(), []byte(`hello world`), "/tmp/test.csv", 0)
+
 			assert.Equal(t, tc.expectedError, err)
 		})
 	}

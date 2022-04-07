@@ -7,14 +7,14 @@ require (
 	github.com/docker/docker v20.10.14+incompatible
 	github.com/docker/go-connections v0.4.0
 	github.com/stretchr/testify v1.7.1
-	github.com/testcontainers/testcontainers-go v0.12.0
+	github.com/testcontainers/testcontainers-go v0.13.0
 )
 
 require (
 	github.com/Azure/go-ansiterm v0.0.0-20210617225240-d185dfc1b5a1 // indirect
 	github.com/Microsoft/go-winio v0.5.2 // indirect
 	github.com/Microsoft/hcsshim v0.9.2 // indirect
-	github.com/cenkalti/backoff v2.2.1+incompatible // indirect
+	github.com/cenkalti/backoff/v4 v4.1.2 // indirect
 	github.com/containerd/cgroups v1.0.3 // indirect
 	github.com/containerd/containerd v1.6.2 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
@@ -37,11 +37,10 @@ require (
 	github.com/stretchr/objx v0.3.0 // indirect
 	go.opencensus.io v0.23.0 // indirect
 	golang.org/x/net v0.0.0-20220403103023-749bd193bc2b // indirect
-	golang.org/x/sys v0.0.0-20220405052023-b1e9470b6e64 // indirect
-	google.golang.org/genproto v0.0.0-20220401170504-314d38edb7de // indirect
+	golang.org/x/sys v0.0.0-20220406163625-3f8b81556e12 // indirect
+	google.golang.org/genproto v0.0.0-20220407144326-9054f6ed7bac // indirect
 	google.golang.org/grpc v1.45.0 // indirect
 	google.golang.org/protobuf v1.28.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
-	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
 )
