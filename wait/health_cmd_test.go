@@ -11,8 +11,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 
-	waitmock "go.nhat.io/testcontainers-go-extra/mock/wait"
-	"go.nhat.io/testcontainers-go-extra/wait"
+	waitmock "go.nhat.io/testcontainers-extra/mock/wait"
+	"go.nhat.io/testcontainers-extra/wait"
 )
 
 func TestForHealthCheckCmd(t *testing.T) {
