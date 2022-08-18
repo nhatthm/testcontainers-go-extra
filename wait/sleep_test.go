@@ -7,7 +7,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/nhatthm/testcontainers-go-extra/wait"
+	"go.nhat.io/testcontainers-go-extra/wait"
 )
 
 func TestSleep_Background(t *testing.T) {

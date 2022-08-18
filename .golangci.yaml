@@ -20,6 +20,7 @@ linters-settings:
 linters:
   enable-all: true
   disable:
+    - exhaustruct
     - exhaustivestruct
     - forbidigo
     - forcetypeassert
@@ -33,6 +34,8 @@ linters:
     - ireturn
     - lll
     - maligned
+    - nolintlint # https://github.com/golangci/golangci-lint/issues/3063
+    - nonamedreturns
     - paralleltest
     - scopelint
     - testpackage
