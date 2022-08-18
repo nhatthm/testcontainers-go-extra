@@ -1,4 +1,4 @@
-module go.nhat.io/testcontainers-go-extra
+module go.nhat.io/testcontainers-extra
 
 go 1.17
 

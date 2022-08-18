@@ -14,7 +14,7 @@ import (
 	"github.com/docker/go-connections/nat"
 	"github.com/stretchr/testify/assert"
 
-	"go.nhat.io/testcontainers-go-extra/mock"
+	"go.nhat.io/testcontainers-extra/mock"
 )
 
 // nolint: paralleltest

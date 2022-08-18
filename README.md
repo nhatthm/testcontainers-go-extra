@@ -1,10 +1,10 @@
 # Testcontainers-Go Booster 
 
-[![GitHub Releases](https://img.shields.io/github/v/release/nhatthm/testcontainers-go-extra)](https://go.nhat.io/testcontainers-go-extra/releases/latest)
-[![Build Status](https://go.nhat.io/testcontainers-go-extra/actions/workflows/test.yaml/badge.svg)](https://go.nhat.io/testcontainers-go-extra/actions/workflows/test.yaml)
+[![GitHub Releases](https://img.shields.io/github/v/release/nhatthm/testcontainers-go-extra)](https://github.com/nhatthm/testcontainers-go-extra/releases/latest)
+[![Build Status](https://github.com/nhatthm/testcontainers-go-extra/actions/workflows/test.yaml/badge.svg)](https://github.com/nhatthm/testcontainers-go-extra/actions/workflows/test.yaml)
 [![codecov](https://codecov.io/gh/nhatthm/testcontainers-go-extra/branch/master/graph/badge.svg?token=eTdAgDE2vR)](https://codecov.io/gh/nhatthm/testcontainers-go-extra)
-[![Go Report Card](https://goreportcard.com/badge/go.nhat.io/testcontainers-go-extra)](https://goreportcard.com/report/go.nhat.io/testcontainers-go-extra)
-[![GoDevDoc](https://img.shields.io/badge/dev-doc-00ADD8?logo=go)](https://pkg.go.dev/go.nhat.io/testcontainers-go-extra)
+[![Go Report Card](https://goreportcard.com/badge/go.nhat.io/testcontainers-extra)](https://goreportcard.com/report/go.nhat.io/testcontainers-extra)
+[![GoDevDoc](https://img.shields.io/badge/dev-doc-00ADD8?logo=go)](https://pkg.go.dev/go.nhat.io/testcontainers-extra)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/donate/?hosted_button_id=PJZSGJN57TDJY)
 
 Boost `testcontainers/testcontainers-go` with some jet fuel! 🚀
@@ -16,7 +16,7 @@ Boost `testcontainers/testcontainers-go` with some jet fuel! 🚀
 ## Install
 
 ```bash
-go get go.nhat.io/testcontainers-go-extra
+go get go.nhat.io/testcontainers-extra
 ```
 
 ## Callbacks
@@ -33,8 +33,8 @@ import (
 	"context"
 	"time"
 
-	"go.nhat.io/testcontainers-go-extra"
-	"go.nhat.io/testcontainers-go-extra/wait"
+	"go.nhat.io/testcontainers-extra"
+	"go.nhat.io/testcontainers-extra/wait"
 )
 
 func startPostgres(dbName, dbUser, dbPassword string) error {
@@ -76,8 +76,8 @@ import (
 	"context"
 	"time"
 
-	"go.nhat.io/testcontainers-go-extra"
-	"go.nhat.io/testcontainers-go-extra/wait"
+	"go.nhat.io/testcontainers-extra"
+	"go.nhat.io/testcontainers-extra/wait"
 )
 
 func startPostgres(dbName, dbUser, dbPassword string) error {
@@ -130,8 +130,8 @@ import (
 	"context"
 	"time"
 
-	"go.nhat.io/testcontainers-go-extra"
-	"go.nhat.io/testcontainers-go-extra/wait"
+	"go.nhat.io/testcontainers-extra"
+	"go.nhat.io/testcontainers-extra/wait"
 )
 
 func startPostgres(dbName, dbUser, dbPassword string) error {

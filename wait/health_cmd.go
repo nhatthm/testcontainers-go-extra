@@ -7,7 +7,7 @@ import (
 
 	"github.com/testcontainers/testcontainers-go/wait"
 
-	"go.nhat.io/testcontainers-go-extra"
+	"go.nhat.io/testcontainers-extra"
 )
 
 func healthCheckTestCmd(cmd []string) HealthCheckTestFunc {
