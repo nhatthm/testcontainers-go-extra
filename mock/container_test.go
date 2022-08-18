@@ -11,7 +11,7 @@ import (
 	"github.com/docker/go-connections/nat"
 	"github.com/stretchr/testify/assert"
 
-	"github.com/nhatthm/testcontainers-go-extra/mock"
+	"go.nhat.io/testcontainers-go-extra/mock"
 )
 
 func TestContainer_GetContainerID(t *testing.T) {

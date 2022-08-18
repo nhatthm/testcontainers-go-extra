@@ -9,7 +9,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/nhatthm/testcontainers-go-extra/wait"
+	"go.nhat.io/testcontainers-go-extra/wait"
 )
 
 func TestHealthCheckStrategy_WithTestInterval_TestError(t *testing.T) {

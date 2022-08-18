@@ -7,7 +7,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/nhatthm/testcontainers-go-extra/mock/wait"
+	"go.nhat.io/testcontainers-go-extra/mock/wait"
 )
 
 func TestStrategy_WaitUntilReady(t *testing.T) {
