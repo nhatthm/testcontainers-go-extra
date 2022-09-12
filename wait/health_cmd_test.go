@@ -101,7 +101,7 @@ func TestForHealthCheckCmd(t *testing.T) {
 					Return(runningState, nil)
 
 				t.On("Exec", isContext, []string{"test"}).
-					Return(0, errors.New("exec error"))
+					Return(0, nil, errors.New("exec error"))
 			}),
 			expectedSuccess: false,
 			expectedError:   "exec error",
@@ -113,7 +113,7 @@ func TestForHealthCheckCmd(t *testing.T) {
 					Return(runningState, nil)
 
 				t.On("Exec", isContext, []string{"test"}).
-					Return(1, nil)
+					Return(1, nil, nil)
 			}),
 			expectedSuccess: false,
 			expectedError:   "health check failed: max retries exceeded",
@@ -125,7 +125,7 @@ func TestForHealthCheckCmd(t *testing.T) {
 					Return(runningState, nil)
 
 				t.On("Exec", isContext, []string{"test"}).
-					Return(0, nil)
+					Return(0, nil, nil)
 			}),
 			expectedSuccess: true,
 		},

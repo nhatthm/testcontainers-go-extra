@@ -179,10 +179,16 @@ func (c *Container) NetworkAliases(ctx context.Context) (map[string][]string, er
 }
 
 // Exec satisfies testcontainers.Container interface.
-func (c *Container) Exec(ctx context.Context, cmd []string) (int, error) {
+func (c *Container) Exec(ctx context.Context, cmd []string) (int, io.Reader, error) {
 	result := c.Called(ctx, cmd)
 
-	return result.Int(0), result.Error(1)
+	r1, r2, r3 := result.Int(0), result.Get(1), result.Error(2)
+
+	if r2 == nil {
+		return r1, nil, r3
+	}
+
+	return r1, r2.(io.Reader), r3
 }
 
 // ContainerIP satisfies testcontainers.Container interface.
@@ -202,6 +208,11 @@ func (c *Container) CopyFileToContainer(ctx context.Context, hostFilePath string
 	return c.Called(ctx, hostFilePath, containerFilePath, fileMode).Error(0)
 }
 
+// CopyDirToContainer satisfies testcontainers.Container interface.
+func (c *Container) CopyDirToContainer(ctx context.Context, hostDirPath string, containerParentPath string, fileMode int64) error {
+	return c.Called(ctx, hostDirPath, containerParentPath, fileMode).Error(0)
+}
+
 // CopyFileFromContainer satisfies testcontainers.Container interface.
 func (c *Container) CopyFileFromContainer(ctx context.Context, filePath string) (io.ReadCloser, error) {
 	result := c.Called(ctx, filePath)
@@ -214,6 +225,11 @@ func (c *Container) CopyFileFromContainer(ctx context.Context, filePath string) 
 	}
 
 	return rc.(io.ReadCloser), err
+}
+
+// IsRunning satisfies testcontainers.Container interface.
+func (c *Container) IsRunning() bool {
+	return c.Called().Bool(0)
 }
 
 // mockContainer mocks testcontainers.Container interface.

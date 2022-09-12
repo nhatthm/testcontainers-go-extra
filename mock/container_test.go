@@ -1,6 +1,7 @@
 package mock_test
 
 import (
+	"bytes"
 	"context"
 	"errors"
 	"io"
@@ -670,28 +671,40 @@ func TestContainer_NetworkAliases(t *testing.T) {
 func TestContainer_Exec(t *testing.T) {
 	t.Parallel()
 
+	rdr := new(bytes.Buffer)
+
 	testCases := []struct {
 		scenario       string
 		mock           mock.ContainerMocker
 		expectedResult int
+		expectedReader io.Reader
 		expectedError  error
 	}{
 		{
 			scenario: "error",
 			mock: mock.MockContainer(func(c *mock.Container) {
 				c.On("Exec", context.Background(), []string{"test"}).
-					Return(1, errors.New("error"))
+					Return(1, nil, errors.New("error"))
 			}),
 			expectedResult: 1,
 			expectedError:  errors.New("error"),
 		},
 		{
-			scenario: "no error",
+			scenario: "no reader",
 			mock: mock.MockContainer(func(c *mock.Container) {
 				c.On("Exec", context.Background(), []string{"test"}).
-					Return(0, nil)
+					Return(0, nil, nil)
 			}),
 			expectedResult: 0,
+		},
+		{
+			scenario: "has reader",
+			mock: mock.MockContainer(func(c *mock.Container) {
+				c.On("Exec", context.Background(), []string{"test"}).
+					Return(0, rdr, nil)
+			}),
+			expectedResult: 0,
+			expectedReader: rdr,
 		},
 	}
 
@@ -700,9 +713,10 @@ func TestContainer_Exec(t *testing.T) {
 		t.Run(tc.scenario, func(t *testing.T) {
 			t.Parallel()
 
-			result, err := tc.mock(t).Exec(context.Background(), []string{"test"})
+			actualResult, actualReader, err := tc.mock(t).Exec(context.Background(), []string{"test"})
 
-			assert.Equal(t, tc.expectedResult, result)
+			assert.Equal(t, tc.expectedResult, actualResult)
+			assert.Equal(t, tc.expectedReader, actualReader)
 			assert.Equal(t, tc.expectedError, err)
 		})
 	}
@@ -822,6 +836,43 @@ func TestContainer_CopyFileToContainer(t *testing.T) {
 	}
 }
 
+func TestContainer_CopyDirToContainer(t *testing.T) {
+	t.Parallel()
+
+	testCases := []struct {
+		scenario      string
+		mock          mock.ContainerMocker
+		expectedError error
+	}{
+		{
+			scenario: "error",
+			mock: mock.MockContainer(func(c *mock.Container) {
+				c.On("CopyDirToContainer", context.Background(), "test", "/tmp", int64(0)).
+					Return(errors.New("error"))
+			}),
+			expectedError: errors.New("error"),
+		},
+		{
+			scenario: "no error",
+			mock: mock.MockContainer(func(c *mock.Container) {
+				c.On("CopyDirToContainer", context.Background(), "test", "/tmp", int64(0)).
+					Return(nil)
+			}),
+		},
+	}
+
+	for _, tc := range testCases {
+		tc := tc
+		t.Run(tc.scenario, func(t *testing.T) {
+			t.Parallel()
+
+			err := tc.mock(t).CopyDirToContainer(context.Background(), "test", "/tmp", 0)
+
+			assert.Equal(t, tc.expectedError, err)
+		})
+	}
+}
+
 func TestContainer_CopyFileFromContainer(t *testing.T) {
 	t.Parallel()
 
@@ -860,6 +911,44 @@ func TestContainer_CopyFileFromContainer(t *testing.T) {
 
 			assert.Equal(t, tc.expectedResult, result)
 			assert.Equal(t, tc.expectedError, err)
+		})
+	}
+}
+
+func TestContainer_IsRunning(t *testing.T) {
+	t.Parallel()
+
+	testCases := []struct {
+		scenario string
+		mock     mock.ContainerMocker
+		expected bool
+	}{
+		{
+			scenario: "not running",
+			mock: mock.MockContainer(func(c *mock.Container) {
+				c.On("IsRunning").
+					Return(false)
+			}),
+			expected: false,
+		},
+		{
+			scenario: "running",
+			mock: mock.MockContainer(func(c *mock.Container) {
+				c.On("IsRunning").
+					Return(true)
+			}),
+			expected: true,
+		},
+	}
+
+	for _, tc := range testCases {
+		tc := tc
+		t.Run(tc.scenario, func(t *testing.T) {
+			t.Parallel()
+
+			actual := tc.mock(t).IsRunning()
+
+			assert.Equal(t, tc.expected, actual)
 		})
 	}
 }
