@@ -61,10 +61,29 @@ func (s *StrategyTarget) Logs(ctx context.Context) (io.ReadCloser, error) {
 }
 
 // Exec satisfies wait.StrategyTarget interface.
-func (s *StrategyTarget) Exec(ctx context.Context, cmd []string) (int, error) {
+func (s *StrategyTarget) Exec(ctx context.Context, cmd []string) (int, io.Reader, error) {
 	result := s.Called(ctx, cmd)
 
-	return result.Int(0), result.Error(1)
+	r1, r2, r3 := result.Int(0), result.Get(1), result.Error(2)
+
+	if r2 == nil {
+		return r1, nil, r3
+	}
+
+	return r1, r2.(io.Reader), r3
+}
+
+// Ports satisfies wait.StrategyTarget interface.
+func (s *StrategyTarget) Ports(ctx context.Context) (nat.PortMap, error) {
+	result := s.Called(ctx)
+
+	r1, r2 := result.Get(0), result.Error(1)
+
+	if r1 == nil {
+		return nil, r2
+	}
+
+	return r1.(nat.PortMap), r2
 }
 
 // State satisfies wait.StrategyTarget interface.

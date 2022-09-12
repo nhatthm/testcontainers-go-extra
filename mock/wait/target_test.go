@@ -1,6 +1,7 @@
 package wait_test
 
 import (
+	"bytes"
 	"context"
 	"errors"
 	"io"
@@ -156,28 +157,40 @@ func TestStrategyTarget_Logs(t *testing.T) {
 func TestStrategyTarget_Exec(t *testing.T) {
 	t.Parallel()
 
+	rdr := new(bytes.Buffer)
+
 	testCases := []struct {
 		scenario       string
 		mock           wait.StrategyTargetMocker
 		expectedResult int
+		expectedReader io.Reader
 		expectedError  error
 	}{
 		{
 			scenario: "error",
 			mock: wait.MockStrategyTarget(func(t *wait.StrategyTarget) {
 				t.On("Exec", context.Background(), []string{"test"}).
-					Return(1, errors.New("error"))
+					Return(1, nil, errors.New("error"))
 			}),
 			expectedResult: 1,
 			expectedError:  errors.New("error"),
 		},
 		{
-			scenario: "no error",
+			scenario: "no reader",
 			mock: wait.MockStrategyTarget(func(t *wait.StrategyTarget) {
 				t.On("Exec", context.Background(), []string{"test"}).
-					Return(0, nil)
+					Return(0, nil, nil)
 			}),
 			expectedResult: 0,
+		},
+		{
+			scenario: "has reader",
+			mock: wait.MockStrategyTarget(func(t *wait.StrategyTarget) {
+				t.On("Exec", context.Background(), []string{"test"}).
+					Return(0, rdr, nil)
+			}),
+			expectedResult: 0,
+			expectedReader: rdr,
 		},
 	}
 
@@ -186,7 +199,52 @@ func TestStrategyTarget_Exec(t *testing.T) {
 		t.Run(tc.scenario, func(t *testing.T) {
 			t.Parallel()
 
-			result, err := tc.mock(t).Exec(context.Background(), []string{"test"})
+			actualResult, actualReader, err := tc.mock(t).Exec(context.Background(), []string{"test"})
+
+			assert.Equal(t, tc.expectedResult, actualResult)
+			assert.Equal(t, tc.expectedReader, actualReader)
+			assert.Equal(t, tc.expectedError, err)
+		})
+	}
+}
+
+func TestStrategyTarget_Ports(t *testing.T) {
+	t.Parallel()
+
+	testCases := []struct {
+		scenario       string
+		mock           wait.StrategyTargetMocker
+		expectedResult nat.PortMap
+		expectedError  error
+	}{
+		{
+			scenario: "error",
+			mock: wait.MockStrategyTarget(func(t *wait.StrategyTarget) {
+				t.On("Ports", context.Background()).
+					Return(nil, errors.New("error"))
+			}),
+			expectedError: errors.New("error"),
+		},
+		{
+			scenario: "no error",
+			mock: wait.MockStrategyTarget(func(t *wait.StrategyTarget) {
+				t.On("Ports", context.Background()).
+					Return(nat.PortMap{
+						"80/tcp": []nat.PortBinding{},
+					}, nil)
+			}),
+			expectedResult: nat.PortMap{
+				"80/tcp": []nat.PortBinding{},
+			},
+		},
+	}
+
+	for _, tc := range testCases {
+		tc := tc
+		t.Run(tc.scenario, func(t *testing.T) {
+			t.Parallel()
+
+			result, err := tc.mock(t).Ports(context.Background())
 
 			assert.Equal(t, tc.expectedResult, result)
 			assert.Equal(t, tc.expectedError, err)

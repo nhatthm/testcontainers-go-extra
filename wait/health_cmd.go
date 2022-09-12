@@ -39,7 +39,7 @@ func healthCheckTestCmd(cmd []string) HealthCheckTestFunc {
 			return false, nil
 		}
 
-		code, err := target.Exec(ctx, cmd)
+		code, _, err := target.Exec(ctx, cmd)
 		if err != nil {
 			return false, err
 		}
