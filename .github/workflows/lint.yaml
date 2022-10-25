@@ -23,7 +23,7 @@ jobs:
 
       - id: vars
         run: |
-          make gha-vars
+          make $GITHUB_OUTPUT
 
       - name: lint
         uses: golangci/golangci-lint-action@v3
