@@ -6,7 +6,7 @@ require (
 	github.com/docker/distribution v2.8.1+incompatible
 	github.com/docker/docker v20.10.20+incompatible
 	github.com/docker/go-connections v0.4.0
-	github.com/stretchr/testify v1.8.0
+	github.com/stretchr/testify v1.8.1
 	github.com/testcontainers/testcontainers-go v0.14.0
 )
 
@@ -34,7 +34,7 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/sirupsen/logrus v1.9.0 // indirect
-	github.com/stretchr/objx v0.4.0 // indirect
+	github.com/stretchr/objx v0.5.0 // indirect
 	go.opencensus.io v0.23.0 // indirect
 	golang.org/x/net v0.0.0-20220909164309-bea034e7d591 // indirect
 	golang.org/x/sys v0.0.0-20220909162455-aba9fc2a8ff2 // indirect
