@@ -6,6 +6,8 @@ import (
 	context "context"
 	io "io"
 
+	exec "github.com/testcontainers/testcontainers-go/exec"
+
 	mock "github.com/stretchr/testify/mock"
 
 	nat "github.com/docker/go-connections/nat"
@@ -152,20 +154,27 @@ func (_m *Container) Endpoint(_a0 context.Context, _a1 string) (string, error) {
 	return r0, r1
 }
 
-// Exec provides a mock function with given fields: ctx, cmd
-func (_m *Container) Exec(ctx context.Context, cmd []string) (int, io.Reader, error) {
-	ret := _m.Called(ctx, cmd)
+// Exec provides a mock function with given fields: ctx, cmd, options
+func (_m *Container) Exec(ctx context.Context, cmd []string, options ...exec.ProcessOption) (int, io.Reader, error) {
+	_va := make([]interface{}, len(options))
+	for _i := range options {
+		_va[_i] = options[_i]
+	}
+	var _ca []interface{}
+	_ca = append(_ca, ctx, cmd)
+	_ca = append(_ca, _va...)
+	ret := _m.Called(_ca...)
 
 	var r0 int
-	if rf, ok := ret.Get(0).(func(context.Context, []string) int); ok {
-		r0 = rf(ctx, cmd)
+	if rf, ok := ret.Get(0).(func(context.Context, []string, ...exec.ProcessOption) int); ok {
+		r0 = rf(ctx, cmd, options...)
 	} else {
 		r0 = ret.Get(0).(int)
 	}
 
 	var r1 io.Reader
-	if rf, ok := ret.Get(1).(func(context.Context, []string) io.Reader); ok {
-		r1 = rf(ctx, cmd)
+	if rf, ok := ret.Get(1).(func(context.Context, []string, ...exec.ProcessOption) io.Reader); ok {
+		r1 = rf(ctx, cmd, options...)
 	} else {
 		if ret.Get(1) != nil {
 			r1 = ret.Get(1).(io.Reader)
@@ -173,8 +182,8 @@ func (_m *Container) Exec(ctx context.Context, cmd []string) (int, io.Reader, er
 	}
 
 	var r2 error
-	if rf, ok := ret.Get(2).(func(context.Context, []string) error); ok {
-		r2 = rf(ctx, cmd)
+	if rf, ok := ret.Get(2).(func(context.Context, []string, ...exec.ProcessOption) error); ok {
+		r2 = rf(ctx, cmd, options...)
 	} else {
 		r2 = ret.Error(2)
 	}
