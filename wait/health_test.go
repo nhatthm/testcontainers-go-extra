@@ -151,7 +151,7 @@ func TestHealthCheckStrategy_WithTestInterval_FailInStartPeriodNotCountedAsRetry
 	elapsedTime := time.Since(startTime)
 
 	assert.NoError(t, err)
-	assertInDeltaDurationf(t, elapsedTime, expectedTime, 5*time.Millisecond, "strategy should succeed within %s", expectedTime)
+	assertInDeltaDurationf(t, elapsedTime, expectedTime, 6*time.Millisecond, "strategy should succeed within %s", expectedTime)
 	assert.Equal(t, expectedCalled, called, "test was called %d time(s), expected %d", called, expectedCalled)
 }
 
