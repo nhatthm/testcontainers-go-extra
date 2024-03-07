@@ -6,8 +6,6 @@ import (
 	"github.com/testcontainers/testcontainers-go"
 )
 
-//go:generate bash -c "mockery --name Container --dir=\"$(go env GOMODCACHE)/github.com/testcontainers/testcontainers-go@$(go list -m -f '{{ .Version }}' github.com/testcontainers/testcontainers-go)\" --output . --outpkg mock --filename container.go"
-
 // ContainerMocker is Container mocker.
 type ContainerMocker func(tb testing.TB) *Container
 

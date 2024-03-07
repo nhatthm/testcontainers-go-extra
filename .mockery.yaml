@@ -1,0 +1,22 @@
+dry-run: false
+with-expecter: false
+mockname: "{{.InterfaceName}}"
+filename: "{{ .InterfaceName | snakecase }}.go"
+dir: "mock"
+outpkg: mock
+packages:
+  github.com/testcontainers/testcontainers-go:
+    config:
+    interfaces:
+      Container:
+        config:
+
+  github.com/testcontainers/testcontainers-go/wait:
+    config:
+      dir: "mock/wait"
+      outpkg: "wait"
+    interfaces:
+      Strategy:
+        config:
+      StrategyTarget:
+        config:

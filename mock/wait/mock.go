@@ -6,9 +6,6 @@ import (
 	"github.com/testcontainers/testcontainers-go/wait"
 )
 
-//go:generate bash -c "mockery --name Strategy --dir=\"$(go env GOMODCACHE)/github.com/testcontainers/testcontainers-go@$(go list -m -f '{{ .Version }}' github.com/testcontainers/testcontainers-go)/wait\" --output . --outpkg wait --filename strategy.go"
-//go:generate bash -c "mockery --name StrategyTarget --dir=\"$(go env GOMODCACHE)/github.com/testcontainers/testcontainers-go@$(go list -m -f '{{ .Version }}' github.com/testcontainers/testcontainers-go)/wait\" --output . --outpkg wait --filename target.go"
-
 // StrategyMocker is Strategy mocker.
 type StrategyMocker func(tb testing.TB) *Strategy
 
