@@ -6,7 +6,7 @@ toolchain go1.21.6
 
 require (
 	github.com/distribution/reference v0.5.0
-	github.com/docker/docker v25.0.4+incompatible
+	github.com/docker/docker v25.0.5+incompatible
 	github.com/docker/go-connections v0.5.0
 	github.com/stretchr/testify v1.9.0
 	github.com/testcontainers/testcontainers-go v0.29.1
