@@ -27,7 +27,7 @@ func TestStartGenericContainer_GenericContainerError(t *testing.T) {
 		testcontainers.WithProviderType(-1),
 	)
 
-	expected := `unknown provider`
+	expected := `get provider: unknown provider`
 
 	assert.Nil(t, c)
 	assert.EqualError(t, err, expected)
@@ -243,8 +243,8 @@ func TestStopGenericContainers_Success(t *testing.T) {
 		},
 	)
 
-	require.NotEmpty(t, containers)
 	require.NoError(t, err)
+	require.NotEmpty(t, containers)
 
 	err = testcontainers.StopGenericContainers(context.Background(), containers...)
 
