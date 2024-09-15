@@ -22,9 +22,10 @@ linters:
   enable-all: true
   disable:
     - depguard
+    - err113
     - execinquery
     - exhaustruct
-    - err113
+    - exportloopref
     - forbidigo
     - forcetypeassert
     - gci
