@@ -2,8 +2,8 @@ MODULE_NAME = testcontainers-extra
 
 VENDOR_DIR = vendor
 
-GOLANGCI_LINT_VERSION ?= v1.60.1
-MOCKERY_VERSION ?= v2.45.0
+GOLANGCI_LINT_VERSION ?= v1.61.0
+MOCKERY_VERSION ?= v2.45.1
 
 GO ?= go
 GOLANGCI_LINT ?= $(shell go env GOPATH)/bin/golangci-lint-$(GOLANGCI_LINT_VERSION)
