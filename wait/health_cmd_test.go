@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/container"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 
@@ -18,9 +18,9 @@ import (
 func TestForHealthCheckCmd(t *testing.T) {
 	t.Parallel()
 
-	pausedState := &types.ContainerState{Status: "paused"}
-	restartingState := &types.ContainerState{Status: "restarting"}
-	runningState := &types.ContainerState{Status: "running", Running: true}
+	pausedState := &container.State{Status: "paused"}
+	restartingState := &container.State{Status: "restarting"}
+	runningState := &container.State{Status: "running", Running: true}
 
 	testCases := []struct {
 		scenario        string
