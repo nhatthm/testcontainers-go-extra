@@ -9,3 +9,6 @@ type Container = testcontainers.Container
 
 // ContainerRequest is an alias of testcontainers.ContainerRequest to avoid extra import.
 type ContainerRequest = testcontainers.ContainerRequest
+
+// ContainerFile is an alias of testcontainers.ContainerFile to avoid extra import.
+type ContainerFile = testcontainers.ContainerFile
